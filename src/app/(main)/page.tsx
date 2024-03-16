@@ -1,46 +1,75 @@
-'use client';
+"use client";
 
-import AgendaCardList from '@/components/list/agenda-card-list';
-import Loader from '@/components/shared/Loader';
+import AgendaCardList from "@/components/list/agenda-card-list";
+import Loader from "@/components/shared/Loader";
 
-import Image from 'next/image';
-import { Suspense } from 'react';
+import Image from "next/image";
+import { Suspense } from "react";
+import ProposedAgendaCard from "@/components/cards/proposed-card";
+
+const proposedAgendaCardDummyProps = [
+  {
+    agendaImage: "/icons/profile-placeholder.svg",
+    profileImage: "/icons/profile-placeholder.svg",
+    username: "user1",
+    uploadedDate: new Date(),
+    expiryDate: new Date(),
+    title: "Card 1",
+    tags: ["tag1", "tag2"],
+    heartCount: 10,
+    participantsCount: 10,
+    viewsCount: 20,
+    inputWordCount: 20,
+    hasVoted: true,
+    id: 1,
+  },
+  {
+    agendaImage: "/icons/profile-placeholder.svg",
+    profileImage: "/icons/profile-placeholder.svg",
+    username: "user1",
+    uploadedDate: new Date(),
+    expiryDate: new Date("2024-01-01"),
+    title: "Card 1",
+    tags: ["tag1", "tag2"],
+    heartCount: 10,
+    participantsCount: 10,
+    viewsCount: 20,
+    inputWordCount: 20,
+    hasVoted: true,
+    id: 1,
+  },
+  {
+    agendaImage: "/icons/profile-placeholder.svg",
+    profileImage: "/icons/profile-placeholder.svg",
+    username: "user1",
+    uploadedDate: new Date(),
+    expiryDate: new Date(),
+    title: "Card 1",
+    tags: ["tag1", "tag2"],
+    heartCount: 10,
+    participantsCount: 10,
+    viewsCount: 20,
+    inputWordCount: 20,
+    hasVoted: true,
+    id: 1,
+  },
+];
 
 export default function Home() {
   return (
-    <main className='flex flex-1'>
-      <div className='common-container'>
-        <div className='home-agendas'>
-          <div className='flex gap-2 w-full max-w-5xl'>
-            <Image
-              src='/icons/bank.svg'
-              width={40}
-              height={40}
-              alt='edit'
-              className='dark:invert-white'
-            />
-            <h2 className='h3-bold md:h2-bold text-left w-full'>Agenda</h2>
-          </div>
-
+    <main className="flex flex-1">
+      <div className="common-container">
+        <div className="flex w-full p-4">
+          <div className="home-headline">상정된 안건</div>
+        </div>
+        <div>persons</div>
+        <div className="home-proposed-agendas">
           <Suspense fallback={<Loader />}>
-            <AgendaCardList />
+            {proposedAgendaCardDummyProps.map((proposedAgendaCardProps) => (
+              <ProposedAgendaCard props={proposedAgendaCardProps} />
+            ))}
           </Suspense>
         </div>
-      </div>
-
-      <div className='home-creators border-l-2'>
-        <h3 className='h3-bold text-black dark:text-light-1'>Top Agendas</h3>
-        {/* {isUserLoading && !creators ? (
-          <Loader />
-        ) : (
-          <ul className="grid 2xl:grid-cols-2 gap-6">
-            {creators?.documents.map((creator) => (
-              <li key={creator?.$id}>
-                <UserCard user={creator} />
-              </li>
-            ))}
-          </ul>
-        )} */}
       </div>
     </main>
   );
