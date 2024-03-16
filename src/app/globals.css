@@ -91,6 +91,10 @@
     @apply text-[10px] font-medium leading-[140%];
   }
 
+  .home-headline {
+    @apply text-[28px] font-semibold leading-[160%];
+  }
+
   /* UTILITIES */
   .invert-white {
     @apply invert brightness-0 transition;
@@ -145,8 +149,9 @@
     @apply flex flex-col flex-1 items-center gap-10 py-10 px-5 md:px-8 lg:p-14 h-lvh max-sm:pb-40 custom-scrollbar overflow-y-auto;
   }
 
-  .home-agendas {
-    @apply max-w-screen-sm flex flex-col items-center w-full gap-6 md:gap-9;
+
+  .home-proposed-agendas {
+    @apply max-w-screen-sm flex flex-col items-center w-full gap-3 md:gap-3
   }
 
   .home-creators {
