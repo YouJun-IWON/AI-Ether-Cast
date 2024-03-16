@@ -3,7 +3,7 @@ import { AgendaAIPayload, MessagePayload } from '@/validation/message';
 
 import {
   createParser,
-  ParsedEvent,
+  Parseent,
   ReconnectInterval,
 } from 'eventsource-parser';
 
@@ -52,7 +52,7 @@ export async function POST(req: Request) {
   const stream = new ReadableStream({
     async start(controller) {
       // callback
-      function onParse(event: ParsedEvent | ReconnectInterval) {
+      function onParse(event: Parseent | ReconnectInterval) {
         if (event.type === 'event') {
           const data = event.data;
 
@@ -93,7 +93,7 @@ export async function POST(req: Request) {
       // this ensures we properly read chunks and invoke an event for each SSE event stream
       const parser = createParser(onParse);
 
-      // https://web.dev/streams/#asynchronous-iteration
+      // https://web./streams/#asynchronous-iteration
       for await (const chunk of res.body as any) {
         parser.feed(decoder.decode(chunk));
       }

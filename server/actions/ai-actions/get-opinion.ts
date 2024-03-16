@@ -44,7 +44,7 @@ export const getAIOpinionServer = async (message: any) => {
   const stream = new ReadableStream({
     async start(controller) {
       // callback
-      function onParse(event: ParsedEvent | ReconnectInterval) {
+      function onParse(event: Parseent | ReconnectInterval) {
         if (event.type === 'event') {
           const data = event.data;
 
