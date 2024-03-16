@@ -26,10 +26,10 @@ const proposedAgendaCardDummyProps = [
   {
     agendaImage: "/icons/profile-placeholder.svg",
     profileImage: "/icons/profile-placeholder.svg",
-    username: "user1",
-    uploadedDate: new Date(),
-    expiryDate: new Date("2024-01-01"),
-    title: "Card 1",
+    username: "user2",
+    uploadedDate: new Date("2021-01-01"),
+    expiryDate: new Date("2025-01-01"),
+    title: "Card 2",
     tags: ["tag1", "tag2"],
     heartCount: 10,
     participantsCount: 10,
@@ -41,10 +41,10 @@ const proposedAgendaCardDummyProps = [
   {
     agendaImage: "/icons/profile-placeholder.svg",
     profileImage: "/icons/profile-placeholder.svg",
-    username: "user1",
+    username: "user3",
     uploadedDate: new Date(),
     expiryDate: new Date(),
-    title: "Card 1",
+    title: "Card 3",
     tags: ["tag1", "tag2"],
     heartCount: 10,
     participantsCount: 10,
@@ -58,7 +58,7 @@ const proposedAgendaCardDummyProps = [
 export default function Home() {
   return (
     <main className="flex flex-1">
-      <div className="common-container">
+      <div className="common-container bg-gray-50">
         <div className="flex w-full p-4">
           <div className="home-headline">상정된 안건</div>
         </div>
@@ -66,7 +66,10 @@ export default function Home() {
         <div className="home-proposed-agendas">
           <Suspense fallback={<Loader />}>
             {proposedAgendaCardDummyProps.map((proposedAgendaCardProps) => (
-              <ProposedAgendaCard props={proposedAgendaCardProps} />
+              <ProposedAgendaCard
+                props={proposedAgendaCardProps}
+                key={proposedAgendaCardProps.id}
+              />
             ))}
           </Suspense>
         </div>
