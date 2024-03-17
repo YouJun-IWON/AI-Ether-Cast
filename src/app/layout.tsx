@@ -6,10 +6,46 @@ import QueryProvider from '@/lib/providers/query-provider';
 import { ModalProvider } from '@/lib/providers/modal-provider';
 import siteMetadata from '@/utils/siteMetaData';
 import { ClerkProvider } from '@clerk/nextjs';
+import { headers } from 'next/headers';
+import { cookieToInitialState } from 'wagmi';
 
 import WagmiProviderSet from '@/lib/providers/wagmi-provider';
+import { wagmiConfig } from '@/config/wagmi';
 
 const inter = Inter({ subsets: ['latin'] });
+
+export default function RootLayout({
+  children,
+}: Readonly<{
+  children: React.ReactNode;
+}>) {
+  const initialState = cookieToInitialState(
+    wagmiConfig,
+    headers().get('cookie')
+  );
+
+  return (
+    <html lang='en' suppressHydrationWarning>
+      <body className={inter.className}>
+        <WagmiProviderSet initialState={initialState}>
+          <QueryProvider>
+            <ClerkProvider telemetry={false}>
+              <ThemeProvider
+                attribute='class'
+                defaultTheme='light'
+                enableSystem
+                disableTransitionOnChange
+              >
+                <ModalProvider />
+                {children}
+              </ThemeProvider>
+            </ClerkProvider>
+          </QueryProvider>
+        </WagmiProviderSet>
+      </body>
+    </html>
+  );
+}
 
 export const metadata: Metadata = {
   metadataBase: new URL(siteMetadata.siteUrl),
@@ -48,31 +84,3 @@ export const metadata: Metadata = {
     images: [siteMetadata.socialBanner],
   },
 };
-
-export default function RootLayout({
-  children,
-}: Readonly<{
-  children: React.ReactNode;
-}>) {
-  return (
-    <html lang='en' suppressHydrationWarning>
-      <body className={inter.className}>
-        <WagmiProviderSet>
-          <QueryProvider>
-            <ClerkProvider telemetry={false}>
-              <ThemeProvider
-                attribute='class'
-                defaultTheme='system'
-                enableSystem
-                disableTransitionOnChange
-              >
-                <ModalProvider />
-                {children}
-              </ThemeProvider>
-            </ClerkProvider>
-          </QueryProvider>
-        </WagmiProviderSet>
-      </body>
-    </html>
-  );
-}
