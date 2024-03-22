@@ -5,16 +5,18 @@ const Local = Mina.LocalBlockchain();
 Mina.setActiveInstance(Local);
 
 // Local.testAccounts is an array of 10 test accounts that have been pre-filled with Mina
-let feePayer = Local.testAccounts[0].privateKey;
+// let feePayer = Local.testAccounts[0].privateKey;
+const { privateKey: senderKey, publicKey: sender } = Local.testAccounts[0];
+
+const fee = 0.1 * 1e9; // in nanomina (1 billion = 1.0 mina)
 
 // zkapp account
 let zkAppPrivateKey = PrivateKey.random();
 let zkAppAddress = zkAppPrivateKey.toPublicKey();
 let zkAppInstance = new Add(zkAppAddress);
 
-
-let txn = await Mina.transaction(feePayer, () => {
-    AccountUpdate.fundNewAccount(feePayer);
+let txn = await Mina.transaction({ sender: sender, fee }, () => {
+    AccountUpdate.fundNewAccount(sender);
     zkAppInstance.deploy({ zkappKey: zkAppPrivateKey });
   });
   
@@ -25,8 +27,6 @@ const txPromise = await  txn.send();
 `.wait()` automatically resolves once the transaction has been included in a block. this is redundant for the LocalBlockchain, but very helpful for live testnets
 */
 await txPromise.wait();
-
-
 
 // console.log('compile the contract...');
 // await Add.compile();

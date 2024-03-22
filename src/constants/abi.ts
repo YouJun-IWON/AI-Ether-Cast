@@ -13,7 +13,7 @@ export const abi = [
       },
     ],
     stateMutability: 'nonpayable',
-    type: 'constructor',
+    type: '',
   },
   {
     inputs: [
